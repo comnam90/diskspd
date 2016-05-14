@@ -25,7 +25,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 #>
 param(
-    [string[]]$nodes = @()
+    [string[]]$nodes = @(),
     [string]$storagepool = $null
     )
 
