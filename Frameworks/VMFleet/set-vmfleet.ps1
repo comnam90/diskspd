@@ -38,7 +38,7 @@ if ($MemoryMinimumBytes -eq 0) {
     $MemoryMinimumBytes = $MemoryStartupBytes
 }
 
-$g = Get-ClusterGroup |? GroupType -eq VirtualMachine | group -Property OwnerNode -NoElement
+$g = Get-ClusterGroup |? Name -ilike vm-* | group -Property OwnerNode -NoElement
 
 icm ($g.Name) -ArgumentList $ProcessorCount,$MemoryStartupBytes,$MemoryMaximumBytes,$MemoryMinimumBytes,$DynamicMemory {
 
@@ -48,7 +48,7 @@ icm ($g.Name) -ArgumentList $ProcessorCount,$MemoryStartupBytes,$MemoryMaximumBy
            [int64] $MemoryMinimumBytes,
            [boolean]$DynamicMemory )
 
-    Get-ClusterGroup |? GroupType -eq VirtualMachine |? OwnerNode -eq $env:COMPUTERNAME |% {
+    Get-ClusterGroup |? Name -ilike vm-* |? OwnerNode -eq $env:COMPUTERNAME |% {
 
         $memswitch = '-DynamicMemory'
         if (-not $DynamicMemory) {

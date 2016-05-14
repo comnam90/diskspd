@@ -49,5 +49,5 @@ icm $node -arg $id {
     param ($p)
 
     # note: set-vhdqos should be replaced with set-vmharddiskdrive
-    get-vm |% { get-vmharddiskdrive $_ |% { Set-VMHardDiskDrive -QoSPolicyID $p -VMHardDiskDrive $_ }}
+    get-vm vm-* |% { get-vmharddiskdrive $_ |% { Set-VMHardDiskDrive -QoSPolicyID $p -VMHardDiskDrive $_ }}
 }

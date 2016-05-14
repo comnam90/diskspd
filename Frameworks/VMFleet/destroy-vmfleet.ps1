@@ -26,12 +26,12 @@ SOFTWARE.
 #>
 
 # stop and remove clustered vm roles
-Get-ClusterGroup |? GroupType -eq VirtualMachine | Stop-ClusterGroup
-Get-ClusterGroup |? GroupType -eq VirtualMachine | Remove-ClusterGroup -RemoveResources -Force
+Get-ClusterGroup |? Name -ilike vm-* | Stop-ClusterGroup
+Get-ClusterGroup |? Name -ilike vm-* | Remove-ClusterGroup -RemoveResources -Force
 
 # remove all vms
 icm (Get-ClusterNode) {
-    Get-VM | Remove-VM -Confirm:$false -Force
+    Get-VM vm-* | Remove-VM -Confirm:$false -Force
 }
 
 # delete all vm content from csv
