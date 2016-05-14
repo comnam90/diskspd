@@ -40,20 +40,22 @@ if ($nodes.count -eq 0) {
 
 # if storage pool not specified use default pool
 if ($storagepool -eq $null){
-	$storagepool = get-storagepool "S2D *"
+	$storagepool = (get-storagepool "S2D *").FriendlyName
 	if ($storagepool -eq $null){
 		throw "No Storage Pool found"
 	}
 } else {
-	$storagepool = get-storagepool $storagepool
+	$storagepool = (get-storagepool $storagepool).FriendlyName
 }
 
 # Create the fleet CSVs
 icm $nodes {
-	New-Volume -StoragePoolFriendlyName $storagepool.FriendlyName -FriendlyName $env:computername -FileSystem CSVFS_ReFS -Size 1TB
+    param($poolname)
+	New-Volume -StoragePoolFriendlyName $poolName -FriendlyName $env:computername -FileSystem CSVFS_ReFS -Size 1TB
 }
 
 # Create collect CSV
 icm $nodes[-1] {
-	New-Volume -StoragePoolFriendlyName $storagepool.FriendlyName -FriendlyName collect -FileSystem CSVFS_ReFS -Size 1TB
+    param($poolname)
+	New-Volume -StoragePoolFriendlyName $poolname -FriendlyName collect -FileSystem CSVFS_ReFS -Size 1TB
 }
