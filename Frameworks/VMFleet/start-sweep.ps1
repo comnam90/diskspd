@@ -181,7 +181,7 @@ function do-run(
     # if we do not have a pause to clear, need the sleep here since go
     # will release the fleet.
     # smb fileinfo cache +5 seconds (so that fleet will see updated timestamp)
-    if (-not ($checkpause -and (check-pause -isactive:$true))) {
+    if (-not ($checkpause -and (c:\clusterstorage\collect\control\check-pause -isactive:$true))) {
         $script:checkpause = $false
         sleep 15
     }
@@ -200,7 +200,7 @@ function do-run(
         # capture time zero prior to clear - can take time
         $t0 = get-date
 
-        clear-pause
+        c:\clusterstorage\collect\control\clear-pause
     } else {
     
         # capture time zero
